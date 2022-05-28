@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import Home from "./Components/Home/Home";
+import NavBar from "./Components/NavBar/NavBar";
+import {AuthContextProvider} from './Components/Firebase/AuthContext';
+import Contact from './Components/Contact/Contact'; 
+import Feedback from "./Components/Feedback/Feedback";
+import { BrowserRouter as Router, useRoutes } from "react-router-dom";
+import { useState } from "react";
 
+const RoutePath = ({ isEnterPrsd, setIsEnterPrsd, searchText, setSearchText }) =>
+
+  useRoutes([
+    { path: "/", element: <Home isEnterPrsd = {isEnterPrsd} setIsEnterPrsd = {setIsEnterPrsd} searchText = {searchText} setSearchText = {setSearchText}/> },
+    { path: "/home", element: <Home isEnterPrsd = {isEnterPrsd} setIsEnterPrsd = {setIsEnterPrsd} searchText = {searchText} setSearchText = {setSearchText}/> }, 
+    { path: "/contact", element: <Contact/> },
+    { path: "/feedback", element: <Feedback /> }
+  ]);
+ 
 function App() {
+  
+  const [isEnterPrsd, setIsEnterPrsd] = useState(false);
+  const [searchText, setSearchText] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    
+      <AuthContextProvider>
+        <Router> 
+          <NavBar isEnterPrsd = {isEnterPrsd} setIsEnterPrsd = {setIsEnterPrsd} searchText = {searchText} setSearchText = {setSearchText}/> 
+          <RoutePath isEnterPrsd = {isEnterPrsd} setIsEnterPrsd = {setIsEnterPrsd} searchText = {searchText} setSearchText = {setSearchText}/>
+        </Router>
+      </AuthContextProvider>
   );
 }
 
